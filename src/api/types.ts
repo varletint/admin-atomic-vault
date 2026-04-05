@@ -12,3 +12,14 @@ export interface PaginatedResponse<T> {
   limit: number;
   totalPages: number;
 }
+
+export interface OrdersPaginatedResponse<T> {
+  success: boolean;
+  data: {
+    orders: T[];
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
