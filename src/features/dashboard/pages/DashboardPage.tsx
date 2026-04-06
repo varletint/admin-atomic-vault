@@ -9,27 +9,27 @@ import {
   type DashboardTab,
 } from "../data/dashboardData";
 
-function MetricCard({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-}) {
-  return (
-    <div className='border border-[var(--color-border)] bg-admin-bg/20 p-5'>
-      <p className='text-[10px] font-bold uppercase tracking-[0.2em] text-admin-muted'>
-        {label}
-      </p>
-      <p className='mt-3 text-2xl font-bold tabular-nums tracking-tight text-admin-ink'>
-        {value}
-      </p>
-      <p className='mt-2 text-xs text-admin-faint'>{hint}</p>
-    </div>
-  );
-}
+// function MetricCard({
+//   label,
+//   value,
+//   hint,
+// }: {
+//   label: string;
+//   value: string;
+//   hint: string;
+// }) {
+//   return (
+//     <div className='border border-[var(--color-border)] bg-admin-bg/20 p-5'>
+//       <p className='text-[10px] font-bold uppercase tracking-[0.2em] text-admin-muted'>
+//         {label}
+//       </p>
+//       <p className='mt-3 text-2xl font-bold tabular-nums tracking-tight text-admin-ink'>
+//         {value}
+//       </p>
+//       <p className='mt-2 text-xs text-admin-faint'>{hint}</p>
+//     </div>
+//   );
+// }
 
 export function DashboardPage() {
   const { user } = useAuth();

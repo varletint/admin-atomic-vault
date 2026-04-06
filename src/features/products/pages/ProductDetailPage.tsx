@@ -75,7 +75,7 @@ function VariantRow({ variant }: { variant: ProductVariant }) {
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { data: product, isLoading, isError } = useProduct(id ?? "");
   const deactivate = useDeactivateProduct();
   const reactivate = useReactivateProduct();
@@ -108,7 +108,7 @@ export function ProductDetailPage() {
     );
   }
 
-  const primaryImage = getPrimaryImage(product);
+  // const primaryImage = getPrimaryImage(product);
   const toggleAction = product.isActive ? deactivate : reactivate;
   const toggleLabel = product.isActive ? "Deactivate" : "Reactivate";
   const togglePending = deactivate.isPending || reactivate.isPending;
