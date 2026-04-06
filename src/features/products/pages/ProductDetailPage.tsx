@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Edit, Power, PowerOff, Star } from "lucide-react";
 import { toast } from "sonner";
@@ -30,10 +30,10 @@ function formatDate(dateStr: string) {
   }).format(new Date(dateStr));
 }
 
-function getPrimaryImage(product: Product): string | null {
-  const primary = product.images.find((img) => img.isPrimary);
-  return primary?.url ?? product.images[0]?.url ?? null;
-}
+// function getPrimaryImage(product: Product): string | null {
+//   const primary = product.images.find((img) => img.isPrimary);
+//   return primary?.url ?? product.images[0]?.url ?? null;
+// }
 
 function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
