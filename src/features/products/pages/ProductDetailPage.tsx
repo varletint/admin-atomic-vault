@@ -10,7 +10,7 @@ import {
   useReactivateProduct,
 } from "../hooks/useProducts";
 import { ProductStatusBadge } from "../components/ProductStatusBadge";
-import type { Product, ProductVariant } from "../types";
+import type { ProductVariant } from "../types";
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat("en-NG", {
@@ -33,7 +33,7 @@ function formatDate(dateStr: string) {
 // function getPrimaryImage(product: Product): string | null {
 //   const primary = product.images.find((img) => img.isPrimary);
 //   return primary?.url ?? product.images[0]?.url ?? null;
-// }
+// }F
 
 function InfoRow({ label, value }: { label: string; value: React.ReactNode }) {
   return (
