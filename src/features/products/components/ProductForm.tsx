@@ -14,10 +14,6 @@ import {
 } from "@/schemas/productSchema";
 import type { Product } from "../types";
 
-/* ─────────────────────────────────────────────
- *  Props
- * ───────────────────────────────────────────── */
-
 interface ImageFileEntry {
   file: File;
   preview: string;
@@ -34,10 +30,6 @@ interface ProductFormProps {
   isSubmitting: boolean;
   onCancel: () => void;
 }
-
-/* ─────────────────────────────────────────────
- *  Component
- * ───────────────────────────────────────────── */
 
 export function ProductForm({
   mode,
@@ -66,6 +58,7 @@ export function ProductForm({
       compareAtPrice: defaultValues?.compareAtPrice,
       costPrice: defaultValues?.costPrice,
       category: defaultValues?.category ?? "",
+      images: defaultValues?.images ?? [],
       brand: defaultValues?.brand ?? "",
       tags: defaultValues?.tags?.join(", ") ?? "",
       hasVariants: defaultValues?.hasVariants ?? false,
@@ -82,6 +75,9 @@ export function ProductForm({
     },
   });
 
+  const values = watch();
+  console.log(values);
+
   const hasVariants = watch("hasVariants");
   const {
     fields: variantFields,
@@ -96,7 +92,6 @@ export function ProductForm({
   const handleFormSubmit = (
     data: CreateProductFormValues | UpdateProductFormValues
   ) => {
-    // Convert comma-separated tags to array
     const processed: Record<string, unknown> = { ...data };
     if (typeof processed.tags === "string") {
       processed.tags = (processed.tags as string)

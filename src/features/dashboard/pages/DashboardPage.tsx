@@ -39,12 +39,12 @@ export function DashboardPage() {
   return (
     <>
       <Helmet>
-        <title>Dashboard — Atomic Admin</title>
+        <title>Overview — Atomic Admin</title>
       </Helmet>
       <div className='p-6 md:p-8'>
         <div className='border-b border-[var(--color-border)] pb-6'>
           <h1 className='text-2xl font-bold tracking-tight text-admin-ink md:text-3xl'>
-            Dashboard
+            Overview
           </h1>
           <p className='mt-2 text-sm font-medium text-admin-muted'>
             <span className='text-admin-text'>{user?.name}</span>

@@ -3,7 +3,7 @@ import { LayoutDashboard, Package, ShoppingBag, X } from "lucide-react";
 import { ROUTES } from "@/config";
 
 const nav = [
-  { to: ROUTES.DASHBOARD, label: "Dashboard", icon: LayoutDashboard },
+  { to: ROUTES.DASHBOARD, label: "Overview", icon: LayoutDashboard },
   { to: ROUTES.PRODUCTS, label: "Products", icon: ShoppingBag },
   { to: ROUTES.ORDERS, label: "Orders", icon: Package },
 ];
@@ -41,7 +41,7 @@ export function AdminSidebar({ open, onClose }: AdminSidebarProps) {
         <p className='px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-admin-faint'>
           Menu
         </p>
-        <nav className='flex flex-col'>
+        <nav className='flex flex-col gap-1.5'>
           {nav.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}

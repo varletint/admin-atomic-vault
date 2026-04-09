@@ -150,8 +150,8 @@ export function ProductDetailPage() {
           <div className='flex gap-2'>
             <Link
               to={`/products/${product._id}/edit`}
-              className='btn btn-primary inline-flex items-center gap-2 no-underline'>
-              <Edit size={14} /> Edit
+              className='btn btn-primary inline-flex items-center gap-2'>
+              <Edit size={14} /> E
             </Link>
             <button
               type='button'

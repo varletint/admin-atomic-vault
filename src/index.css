@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* ─────────────────────────────────────────────────
    Design System — Monochrome (White & Black)
@@ -7,7 +7,7 @@
    ───────────────────────────────────────────────── */
 
 @theme {
-  --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
   --color-admin-bg: #ebebeb;
   --color-admin-surface: #ffffff;
@@ -76,8 +76,8 @@
   --color-info-bg: #eff6ff;
 
   /* ── Typography ────────────────────────────────── */
-  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --font-sans: "Montserrat", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -112,9 +112,12 @@
 
   /* ── Shadows ───────────────────────────────────── */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
 
   /* ── Transitions ───────────────────────────────── */
   --duration-fast: 150ms;
@@ -324,6 +327,9 @@ hr {
   margin-top: 2px;
 }
 
+a {
+  text-decoration: none;
+}
 /* ── Buttons ─────────────────────────────────────── */
 .btn {
   display: inline-flex;
@@ -331,16 +337,16 @@ hr {
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-6);
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition:
-    background-color var(--duration-fast) var(--ease-default),
+  transition: background-color var(--duration-fast) var(--ease-default),
     color var(--duration-fast) var(--ease-default),
     border-color var(--duration-fast) var(--ease-default);
   border-radius: var(--radius);
   border: 1px solid transparent;
+  text-decoration: none;
 }
 
 .btn:disabled {
@@ -495,4 +501,3 @@ hr {
     background: rgba(0, 0, 0, 0.4);
   }
 }
-
