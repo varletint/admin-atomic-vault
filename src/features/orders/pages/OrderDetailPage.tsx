@@ -18,7 +18,7 @@ function formatCurrency(amount: number) {
     style: "currency",
     currency: "NGN",
     minimumFractionDigits: 0,
-  }).format(amount);
+  }).format(amount / 100);
 }
 
 function formatDate(dateStr: string) {
