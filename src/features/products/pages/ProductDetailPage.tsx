@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, Edit, Power, PowerOff, Star } from "lucide-react";
+import {
+  ArrowLeft,
+  Edit,
+  Power,
+  PowerOff,
+  Star,
+  Warehouse,
+} from "lucide-react";
 import { toast } from "sonner";
 import { ROUTES } from "@/config";
 import {
@@ -108,7 +115,6 @@ export function ProductDetailPage() {
     );
   }
 
-  // const primaryImage = getPrimaryImage(product);
   const toggleAction = product.isActive ? deactivate : reactivate;
   const toggleLabel = product.isActive ? "Deactivate" : "Reactivate";
   const togglePending = deactivate.isPending || reactivate.isPending;
@@ -150,8 +156,8 @@ export function ProductDetailPage() {
           <div className='flex gap-2'>
             <Link
               to={`/products/${product._id}/edit`}
-              className='btn btn-primary inline-flex items-center gap-2'>
-              <Edit size={14} /> E
+              className='btn btn-primary inline-flex items-center uppercase gap-2'>
+              <Edit size={14} /> Edit
             </Link>
             <button
               type='button'
@@ -282,6 +288,12 @@ export function ProductDetailPage() {
                 }
               />
               <InfoRow label='Min. Order Qty' value={product.minOrderQty} />
+              <Link
+                to={`/products/${product._id}/inventory`}
+                className='mt-3 btn btn-secondary w-full inline-flex items-center justify-center gap-2 no-underline'>
+                <Warehouse size={14} />
+                Manage Inventory
+              </Link>
             </section>
 
             {/* Details */}

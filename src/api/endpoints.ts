@@ -30,4 +30,12 @@ export const API_ENDPOINTS = {
     CONFIRM: "/storage/confirm",
     ROLLBACK: "/storage/rollback",
   },
+  INVENTORY: {
+    GET: (productId: string) => `/inventory/${productId}`,
+    MOVEMENTS: (productId: string) => `/inventory/${productId}/movements`,
+    ADJUST: (productId: string) => `/inventory/${productId}/adjust`,
+    RESERVE: (productId: string) => `/inventory/${productId}/reserve`,
+    RELEASE: (productId: string) => `/inventory/${productId}/release`,
+    COMMIT: (productId: string) => `/inventory/${productId}/commit`,
+  },
 } as const;

@@ -10,6 +10,7 @@ import { ProductsPage } from "@/features/products/pages/ProductsPage";
 import { ProductDetailPage } from "@/features/products/pages/ProductDetailPage";
 import { CreateProductPage } from "@/features/products/pages/CreateProductPage";
 import { EditProductPage } from "@/features/products/pages/EditProductPage";
+import { InventoryPage } from "@/features/inventory/pages/InventoryPage";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import "./App.css";
 import { AuthGuard } from "./guards/AuthGuard";
@@ -53,6 +54,10 @@ export default function App() {
             <Route path='products/new' element={<CreateProductPage />} />
             <Route path='products/:id' element={<ProductDetailPage />} />
             <Route path='products/:id/edit' element={<EditProductPage />} />
+            <Route
+              path='products/:productId/inventory'
+              element={<InventoryPage />}
+            />
           </Route>
           <Route path='*' element={<Navigate to={ROUTES.LOGIN} replace />} />
         </Routes>
