@@ -54,16 +54,26 @@ export function ProductForm({
       name: defaultValues?.name ?? "",
       description: defaultValues?.description ?? "",
       shortDescription: defaultValues?.shortDescription ?? "",
-      price: defaultValues?.price ?? 0,
-      compareAtPrice: defaultValues?.compareAtPrice,
-      costPrice: defaultValues?.costPrice,
+      price: defaultValues?.price !== undefined ? defaultValues.price / 100 : 0,
+      compareAtPrice:
+        defaultValues?.compareAtPrice !== undefined
+          ? defaultValues.compareAtPrice / 100
+          : undefined,
+      costPrice:
+        defaultValues?.costPrice !== undefined
+          ? defaultValues.costPrice / 100
+          : undefined,
       category: defaultValues?.category ?? "",
       images: defaultValues?.images ?? [],
       brand: defaultValues?.brand ?? "",
       tags: defaultValues?.tags?.join(", ") ?? "",
       hasVariants: defaultValues?.hasVariants ?? false,
       variantOptionNames: defaultValues?.variantOptionNames?.join(", ") ?? "",
-      variants: defaultValues?.variants ?? [],
+      variants:
+        defaultValues?.variants?.map((v) => ({
+          ...v,
+          price: v.price !== undefined ? v.price / 100 : 0,
+        })) ?? [],
       productType: defaultValues?.productType ?? "physical",
       weightUnit: defaultValues?.weightUnit ?? "g",
       weight: defaultValues?.weight,
@@ -91,16 +101,22 @@ export function ProductForm({
   ) => {
     const processed: Record<string, unknown> = { ...data };
 
-    // Round monetary values to prevent floating-point drift
+    // Convert monetary values (entered as Naira) to Kobo and round to prevent floating-point drift
     if (typeof processed.price === "number") {
-      processed.price = Math.round(processed.price * 100) / 100;
+      processed.price = Math.round(processed.price * 100);
     }
     if (typeof processed.compareAtPrice === "number") {
-      processed.compareAtPrice =
-        Math.round(processed.compareAtPrice * 100) / 100;
+      processed.compareAtPrice = Math.round(processed.compareAtPrice * 100);
     }
     if (typeof processed.costPrice === "number") {
-      processed.costPrice = Math.round(processed.costPrice * 100) / 100;
+      processed.costPrice = Math.round(processed.costPrice * 100);
+    }
+    if (Array.isArray(processed.variants)) {
+      processed.variants = processed.variants.map((v: any) => ({
+        ...v,
+        price:
+          typeof v.price === "number" ? Math.round(v.price * 100) : v.price,
+      }));
     }
 
     if (typeof processed.tags === "string") {
