@@ -295,7 +295,7 @@ export function OrderDetailPage() {
                 Are you sure you want to cancel this order? This action cannot
                 be undone.
               </p>
-              <div className='mt-6 flex flex-col-reverse sm:flex-row  gap-3 justify-end'>
+              <div className='mt-6 flex flex-col sm:flex-row  gap-3 justify-end'>
                 <button
                   type='button'
                   className='btn btn-secondary'
