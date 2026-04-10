@@ -29,52 +29,50 @@ export function UpdateStatusModal({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-50 bg-black/40"
+        className='fixed inset-0 z-50 bg-black/40'
         onClick={onClose}
-        aria-hidden="true"
+        aria-hidden='true'
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="w-full max-w-md border border-[var(--color-border)] bg-admin-surface p-6 animate-fadeIn">
-          <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-admin-ink">
+      <div className='fixed inset-0 z-50 flex items-center justify-center p-4'>
+        <div className='w-full max-w-md border border-[var(--color-border)] bg-admin-surface p-6 animate-fadeIn'>
+          <h3 className='text-sm font-bold uppercase tracking-[0.12em] text-admin-ink'>
             Update Status
           </h3>
-          <p className="mt-2 text-sm text-admin-text">
+          <p className='mt-2 text-sm text-admin-text'>
             Move this order from{" "}
-            <span className="font-bold">{currentStatus}</span> to{" "}
-            <span className="font-bold">{nextStatus}</span>?
+            <span className='font-bold'>{currentStatus}</span> to{" "}
+            <span className='font-bold'>{nextStatus}</span>?
           </p>
 
-          <div className="mt-4">
-            <label className="input-label" htmlFor="status-note">
+          <div className='mt-4'>
+            <label className='input-label' htmlFor='status-note'>
               Note (optional)
             </label>
             <textarea
-              id="status-note"
-              className="input-field mt-1 resize-none"
+              id='status-note'
+              className='input-field mt-1 resize-none'
               rows={2}
-              placeholder="Add a note about this status change..."
+              placeholder='Add a note about this status change...'
               value={note}
               onChange={(e) => setNote(e.target.value)}
             />
           </div>
 
-          <div className="mt-6 flex gap-3 justify-end">
+          <div className='mt-6 flex flex-col-reverse sm:flex-row gap-3 justify-end'>
             <button
-              type="button"
-              className="btn btn-secondary"
+              type='button'
+              className='btn btn-secondary'
               onClick={onClose}
-              disabled={isLoading}
-            >
+              disabled={isLoading}>
               Cancel
             </button>
             <button
-              type="button"
-              className="btn btn-primary"
+              type='button'
+              className='btn btn-primary'
               disabled={isLoading}
-              onClick={() => onConfirm(nextStatus, note || undefined)}
-            >
+              onClick={() => onConfirm(nextStatus, note || undefined)}>
               {isLoading ? "Updating…" : `Mark as ${nextStatus}`}
             </button>
           </div>
