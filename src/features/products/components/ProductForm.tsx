@@ -75,9 +75,6 @@ export function ProductForm({
     },
   });
 
-  const values = watch();
-  console.log(values);
-
   const hasVariants = watch("hasVariants");
   const {
     fields: variantFields,
@@ -93,6 +90,19 @@ export function ProductForm({
     data: CreateProductFormValues | UpdateProductFormValues
   ) => {
     const processed: Record<string, unknown> = { ...data };
+
+    // Round monetary values to prevent floating-point drift
+    if (typeof processed.price === "number") {
+      processed.price = Math.round(processed.price * 100) / 100;
+    }
+    if (typeof processed.compareAtPrice === "number") {
+      processed.compareAtPrice =
+        Math.round(processed.compareAtPrice * 100) / 100;
+    }
+    if (typeof processed.costPrice === "number") {
+      processed.costPrice = Math.round(processed.costPrice * 100) / 100;
+    }
+
     if (typeof processed.tags === "string") {
       processed.tags = (processed.tags as string)
         .split(",")
@@ -188,26 +198,53 @@ export function ProductForm({
       <section className='border border-[var(--color-border)] bg-admin-surface p-6'>
         <h2 className={sectionHeader}>Pricing</h2>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-          <NumberInput
-            label='Price (₦)'
-            step='0.01'
-            placeholder='0.00'
-            error={(errors as any).price?.message}
-            {...register("price")}
+          <Controller
+            name='price'
+            control={control}
+            render={({ field }) => (
+              <NumberInput
+                label='Price (₦)'
+                currency
+                placeholder='₦0'
+                error={(errors as any).price?.message}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                onBlur={field.onBlur}
+                name={field.name}
+              />
+            )}
           />
-          <NumberInput
-            label='Compare-at Price'
-            step='0.01'
-            placeholder='Optional'
-            error={(errors as any).compareAtPrice?.message}
-            {...register("compareAtPrice")}
+          <Controller
+            name='compareAtPrice'
+            control={control}
+            render={({ field }) => (
+              <NumberInput
+                label='Compare-at Price'
+                currency
+                placeholder='Optional'
+                error={(errors as any).compareAtPrice?.message}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                onBlur={field.onBlur}
+                name={field.name}
+              />
+            )}
           />
-          <NumberInput
-            label='Cost Price'
-            step='0.01'
-            placeholder='Optional'
-            error={(errors as any).costPrice?.message}
-            {...register("costPrice")}
+          <Controller
+            name='costPrice'
+            control={control}
+            render={({ field }) => (
+              <NumberInput
+                label='Cost Price'
+                currency
+                placeholder='Optional'
+                error={(errors as any).costPrice?.message}
+                value={field.value}
+                onChange={(e) => field.onChange(e.target.value)}
+                onBlur={field.onBlur}
+                name={field.name}
+              />
+            )}
           />
         </div>
       </section>
@@ -284,14 +321,23 @@ export function ProductForm({
                       </button>
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                      <NumberInput
-                        label='Price (₦)'
-                        step='0.01'
-                        placeholder='0.00'
-                        error={
-                          (errors as any).variants?.[index]?.price?.message
-                        }
-                        {...register(`variants.${index}.price` as any)}
+                      <Controller
+                        name={`variants.${index}.price` as any}
+                        control={control}
+                        render={({ field }) => (
+                          <NumberInput
+                            label='Price (₦)'
+                            currency
+                            placeholder='₦0'
+                            error={
+                              (errors as any).variants?.[index]?.price?.message
+                            }
+                            value={field.value}
+                            onChange={(e) => field.onChange(e.target.value)}
+                            onBlur={field.onBlur}
+                            name={field.name}
+                          />
+                        )}
                       />
                       <Input
                         label='Option Name'
