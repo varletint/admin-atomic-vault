@@ -1,9 +1,5 @@
 import { z } from "zod";
 
-/* ─────────────────────────────────────────────
- *  Reusable sub-schemas (mirrors backend productSchemas.ts)
- * ───────────────────────────────────────────── */
-
 const productImageSchema = z.object({
   url: z.string().url("Invalid image URL"),
   altText: z.string().optional(),
