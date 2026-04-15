@@ -46,6 +46,23 @@ function shouldSkipRefresh(url: string | undefined): boolean {
   return NO_REFRESH_PATHS.some((path) => url.includes(path));
 }
 
+function getCsrfToken(): string | undefined {
+  return document.cookie
+    .split("; ")
+    .find((c) => c.startsWith("csrf-token="))
+    ?.split("=")[1];
+}
+
+api.interceptors.request.use((config) => {
+  if (config.method && config.method !== "get") {
+    const token = getCsrfToken();
+    if (token) {
+      config.headers["X-CSRF-Token"] = token;
+    }
+  }
+  return config;
+});
+
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {

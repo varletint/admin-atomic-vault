@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, forwardRef } from "react";
+import { useState, useRef, useCallback, forwardRef } from "react";
 import { ChevronDown, Check } from "lucide-react";
 
 export interface SelectOption {
@@ -44,7 +44,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       string | number | undefined
     >(defaultValue);
     const containerRef = useRef<HTMLDivElement>(null);
-    const listRef = useRef<HTMLUListElement>(null);
     const [focusedIndex, setFocusedIndex] = useState(-1);
 
     const selectId = id || label.toLowerCase().replace(/\s+/g, "-");
@@ -55,27 +54,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       (opt) => String(opt.value) === String(currentValue)
     );
 
-    useEffect(() => {
-      const handleClickOutside = (e: MouseEvent) => {
-        if (
-          containerRef.current &&
-          !containerRef.current.contains(e.target as Node)
-        ) {
-          setIsOpen(false);
-          setFocusedIndex(-1);
-        }
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
+    const closeDropdown = useCallback(() => {
+      setIsOpen(false);
+      setFocusedIndex(-1);
     }, []);
-
-    useEffect(() => {
-      if (isOpen && focusedIndex >= 0 && listRef.current) {
-        const items = listRef.current.querySelectorAll('[role="option"]');
-        items[focusedIndex]?.scrollIntoView({ block: "nearest" });
-      }
-    }, [focusedIndex, isOpen]);
 
     const selectOption = useCallback(
       (option: SelectOption) => {
@@ -177,47 +159,55 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         </button>
 
         {isOpen && (
-          <ul
-            ref={listRef}
-            role='listbox'
-            className='
-              absolute z-50 mt-1 w-full
-              border border-[var(--color-border)] bg-admin-bg
-              shadow-lg
-              max-h-60 overflow-auto
-            '
-            style={{ position: "relative" }}>
-            {options.map((option, index) => {
-              const isSelected = String(option.value) === String(currentValue);
-              const isFocused = index === focusedIndex;
+          <>
+            <div className='fixed inset-0 z-40' onClick={closeDropdown} />
+            <ul
+              role='listbox'
+              className='
+                absolute z-50 mt-1 w-full
+                border border-[var(--color-border)] bg-admin-bg
+                shadow-lg
+                max-h-60 overflow-auto
+              '
+              style={{ position: "relative" }}>
+              {options.map((option, index) => {
+                const isSelected =
+                  String(option.value) === String(currentValue);
+                const isFocused = index === focusedIndex;
 
-              return (
-                <li
-                  key={option.value}
-                  role='option'
-                  aria-selected={isSelected}
-                  onMouseEnter={() => setFocusedIndex(index)}
-                  onClick={() => selectOption(option)}
-                  className={`
-                    flex items-center justify-between gap-2
-                    px-4 py-3
-                    text-sm cursor-pointer
-                    transition-colors
-                    ${isFocused ? "bg-admin-bg/20" : ""}
-                    ${
-                      isSelected
-                        ? "font-bold text-admin-ink"
-                        : "text-admin-text font-medium"
+                return (
+                  <li
+                    key={option.value}
+                    ref={
+                      isFocused
+                        ? (node) => node?.scrollIntoView({ block: "nearest" })
+                        : undefined
                     }
-                  `}>
-                  <span>{option.label}</span>
-                  {isSelected && (
-                    <Check size={14} className='text-admin-accent shrink-0' />
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                    role='option'
+                    aria-selected={isSelected}
+                    onMouseEnter={() => setFocusedIndex(index)}
+                    onClick={() => selectOption(option)}
+                    className={`
+                      flex items-center justify-between gap-2
+                      px-4 py-3
+                      text-sm cursor-pointer
+                      transition-colors
+                      ${isFocused ? "bg-admin-bg/20" : ""}
+                      ${
+                        isSelected
+                          ? "font-bold text-admin-ink"
+                          : "text-admin-text font-medium"
+                      }
+                    `}>
+                    <span>{option.label}</span>
+                    {isSelected && (
+                      <Check size={14} className='text-admin-accent shrink-0' />
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </>
         )}
 
         {error && <span className='input-error-text'>{error}</span>}
