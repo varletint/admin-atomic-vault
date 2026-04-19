@@ -1,11 +1,20 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Package, ShoppingBag, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingBag,
+  Users,
+  Landmark,
+  X,
+} from "lucide-react";
 import { ROUTES } from "@/config";
 
 const nav = [
   { to: ROUTES.DASHBOARD, label: "Overview", icon: LayoutDashboard },
   { to: ROUTES.PRODUCTS, label: "Products", icon: ShoppingBag },
   { to: ROUTES.ORDERS, label: "Orders", icon: Package },
+  { to: ROUTES.USERS, label: "Users", icon: Users },
+  { to: ROUTES.WALLETS, label: "Wallets", icon: Landmark },
 ];
 
 interface AdminSidebarProps {
