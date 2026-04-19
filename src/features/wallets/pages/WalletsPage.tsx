@@ -51,8 +51,8 @@ export function WalletsPage() {
         <title>Wallets — Atomic Admin</title>
       </Helmet>
       <div className='p-4 md:p-8'>
-        <div className='flex items-start justify-between border-b border-[var(--color-border)] pb-6'>
-          <div>
+        <div className='flex flex-col sm:flex-row items-start justify-between border-b border-[var(--color-border)] pb-6'>
+          <div className='flex flex-col gap-2'>
             <h1 className='text-2xl font-bold tracking-tight text-admin-ink md:text-3xl'>
               Wallets
             </h1>
@@ -120,9 +120,9 @@ export function WalletsPage() {
 
         <div className='mt-8'>
           <div className='flex items-center justify-between'>
-            <h2 className='text-xs font-bold uppercase tracking-[0.2em] text-admin-muted'>
+            <h4 className='text-xs font-bold uppercase tracking-[0.2em] text-admin-muted'>
               Recent Ledger Entries
-            </h2>
+            </h4>
             <button
               type='button'
               className='text-xs font-semibold text-admin-muted transition-colors hover:text-admin-ink'

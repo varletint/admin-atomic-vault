@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAdjustWallet } from "../hooks/useWallets";
+import { NumberInput } from "@/components/ui/NumberInput";
 
 interface AdjustDialogProps {
   walletId: string;
@@ -70,18 +71,13 @@ export function AdjustDialog({ walletId, open, onClose }: AdjustDialogProps) {
             ))}
           </div>
 
-          <div className='input-group'>
-            <label className='input-label'>Amount (₦)</label>
-            <input
-              type='number'
-              min='0.01'
-              step='0.01'
-              placeholder='0.00'
-              className='input-field'
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </div>
+          <NumberInput
+            label='Amount (₦)'
+            currency
+            placeholder='0.00'
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
 
           <div className='input-group'>
             <label className='input-label'>Reason</label>
@@ -110,7 +106,7 @@ export function AdjustDialog({ walletId, open, onClose }: AdjustDialogProps) {
             className='btn btn-primary'
             disabled={!canSubmit}
             onClick={handleSubmit}>
-            {mutation.isPending ? "Processing…" : "Confirm Adjustment"}
+            {mutation.isPending ? "Processing…" : "Confirm"}
           </button>
         </div>
       </div>

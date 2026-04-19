@@ -61,9 +61,9 @@ export function WalletDetailPage() {
         </button>
 
         <div className='border-b border-[var(--color-border)] pb-6'>
-          <h1 className='text-2xl font-bold tracking-tight text-admin-ink md:text-3xl'>
+          <h3 className='text-2xl font-bold tracking-tight text-admin-ink md:text-3xl'>
             Wallet Ledger
-          </h1>
+          </h3>
           <p className='mt-1 text-sm text-admin-muted'>
             {wallet.currency} · {formatKobo(wallet.available)} available ·{" "}
             {total} entries
