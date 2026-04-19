@@ -4,6 +4,4 @@ dist
 .env
 .env.*.local
 .DS_Store
-ci.yml
-.github
 scripts
