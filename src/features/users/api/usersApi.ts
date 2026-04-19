@@ -1,4 +1,4 @@
-import { api } from "@/api/axios";
+import api from "@/api/axios";
 import { API_ENDPOINTS } from "@/api/endpoints";
 import type { AdminUser, UsersListResponse, UsersQueryParams } from "../types";
 
