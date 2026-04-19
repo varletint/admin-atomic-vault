@@ -22,4 +22,18 @@ export const QUERY_KEYS = {
     MOVEMENTS: (productId: string, page?: number) =>
       ["inventory", "movements", productId, page] as const,
   },
+  USERS: {
+    ALL: ["users"] as const,
+    LIST: (filters?: Record<string, unknown>) =>
+      ["users", "list", filters] as const,
+    DETAIL: (id: string) => ["users", "detail", id] as const,
+  },
+  WALLETS: {
+    ALL: ["wallets"] as const,
+    STORE: ["wallets", "store"] as const,
+    LEDGER: (walletId: string, filters?: Record<string, unknown>) =>
+      ["wallets", "ledger", walletId, filters] as const,
+    RECONCILE: (walletId: string) =>
+      ["wallets", "reconcile", walletId] as const,
+  },
 } as const;
