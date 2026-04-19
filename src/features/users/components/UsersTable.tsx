@@ -4,7 +4,8 @@ import type { AdminUser } from "../types";
 const statusStyle: Record<string, string> = {
   ACTIVE: "bg-[var(--color-success-bg)] text-[var(--color-success)]",
   SUSPENDED: "bg-[var(--color-error-bg)] text-[var(--color-error)]",
-  PENDING: "bg-[var(--color-warning-bg)] text-[var(--color-warning)]",
+  UNVERIFIED: "bg-[var(--color-warning-bg)] text-[var(--color-warning)]",
+  DEACTIVATED: "bg-[var(--color-bg-muted)] text-admin-faint",
 };
 
 interface UsersTableProps {

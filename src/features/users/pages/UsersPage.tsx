@@ -7,15 +7,17 @@ import type { UserRole, UserStatus } from "../types";
 
 const ROLES: { label: string; value: UserRole | "" }[] = [
   { label: "All", value: "" },
+  { label: "Customer", value: "CUSTOMER" },
+  { label: "Support", value: "SUPPORT" },
   { label: "Admin", value: "ADMIN" },
-  { label: "User", value: "USER" },
 ];
 
 const STATUSES: { label: string; value: UserStatus | "" }[] = [
   { label: "All", value: "" },
+  { label: "Unverified", value: "UNVERIFIED" },
   { label: "Active", value: "ACTIVE" },
   { label: "Suspended", value: "SUSPENDED" },
-  { label: "Pending", value: "PENDING" },
+  { label: "Deactivated", value: "DEACTIVATED" },
 ];
 
 export function UsersPage() {

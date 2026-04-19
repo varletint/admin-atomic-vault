@@ -1,5 +1,30 @@
-export type UserStatus = "ACTIVE" | "SUSPENDED" | "PENDING";
-export type UserRole = "ADMIN" | "USER";
+export type UserStatus = "UNVERIFIED" | "ACTIVE" | "SUSPENDED" | "DEACTIVATED";
+export type UserRole = "CUSTOMER" | "SUPPORT" | "ADMIN";
+
+export interface StatusHistoryEntry {
+  status: UserStatus;
+  timestamp: string;
+  reason?: string;
+  actorId?: string;
+}
+
+export interface UserAddress {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+}
+
+export interface UserAuth {
+  failedLoginAttempts: number;
+  lockedUntil?: string;
+  lastLoginAt?: string;
+  lastLoginIp?: string;
+  lastLoginDevice?: string;
+  passwordChangedAt?: string;
+  tokenVersion: number;
+}
 
 export interface AdminUser {
   _id: string;
@@ -7,6 +32,12 @@ export interface AdminUser {
   email: string;
   role: UserRole;
   status: UserStatus;
+  isEmailVerified: boolean;
+  auth: UserAuth;
+  address: UserAddress;
+  statusHistory: StatusHistoryEntry[];
+  deactivatedAt?: string;
+  suspendedUntil?: string;
   createdAt: string;
   updatedAt: string;
 }
