@@ -7,4 +7,8 @@ export const ROUTES = {
   PRODUCT_DETAIL: "/products/:id",
   PRODUCT_CREATE: "/products/new",
   PRODUCT_EDIT: "/products/:id/edit",
+  USERS: "/users",
+  USER_DETAIL: "/users/:id",
+  WALLETS: "/wallets",
+  WALLET_DETAIL: "/wallets/:id",
 } as const;
