@@ -9,10 +9,11 @@ import type {
 } from "../types";
 
 export async function fetchStoreWallet(): Promise<WalletData> {
-  const { data } = await api.get<{ success: boolean; data: WalletData }>(
-    API_ENDPOINTS.WALLETS.STORE
-  );
-  return data.data;
+  const { data } = await api.get<{
+    success: boolean;
+    data: { wallet: WalletData };
+  }>(API_ENDPOINTS.WALLETS.STORE);
+  return data.data.wallet;
 }
 
 export async function fetchLedger(
