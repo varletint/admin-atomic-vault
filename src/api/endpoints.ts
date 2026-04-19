@@ -38,4 +38,17 @@ export const API_ENDPOINTS = {
     RELEASE: (productId: string) => `/inventory/${productId}/release`,
     COMMIT: (productId: string) => `/inventory/${productId}/commit`,
   },
+  USERS: {
+    LIST: "/users/admin",
+    DETAIL: (id: string) => `/users/${id}`,
+    UPDATE_STATUS: (id: string) => `/users/${id}/status`,
+  },
+  WALLETS: {
+    STORE: "/wallets/store",
+    LEDGER: (id: string) => `/wallets/${id}/ledger`,
+    RECONCILE: (id: string) => `/wallets/${id}/reconcile`,
+    REPAIR: (id: string) => `/wallets/${id}/reconcile/repair`,
+    REVERSE: (txId: string) => `/wallets/transactions/${txId}/reverse`,
+    ADJUST: (id: string) => `/wallets/${id}/adjust`,
+  },
 } as const;
