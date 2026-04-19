@@ -81,7 +81,7 @@ export function ReverseDialog({
             className='btn btn-primary'
             disabled={!canSubmit}
             onClick={handleSubmit}>
-            {mutation.isPending ? "Reversing…" : "Confirm Reversal"}
+            {mutation.isPending ? "Reversing…" : "Confirm"}
           </button>
         </div>
       </div>
