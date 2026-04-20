@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+} from "lucide-react";
 import { useLedger } from "../hooks/useWallets";
 import { ReverseDialog } from "../components/ReverseDialog";
+import type { LedgerEntry } from "../types";
 
 function formatKobo(kobo: number): string {
   return new Intl.NumberFormat("en-NG", {
@@ -13,11 +20,60 @@ function formatKobo(kobo: number): string {
   }).format(kobo / 100);
 }
 
+function DetailField({ label, value }: { label: string; value: string }) {
+  return (
+    <div className='min-w-[180px]'>
+      <p className='text-[10px] font-bold uppercase tracking-[0.15em] text-admin-faint'>
+        {label}
+      </p>
+      <p className='mt-0.5 break-all font-mono text-xs text-admin-ink'>
+        {value || "—"}
+      </p>
+    </div>
+  );
+}
+
+function EntryDetailPanel({ entry }: { entry: LedgerEntry }) {
+  return (
+    <div className='grid grid-cols-2 gap-x-8 gap-y-4 border-t border-dashed border-[var(--color-border)] bg-admin-bg/30 px-6 py-4 md:grid-cols-3 lg:grid-cols-4'>
+      <DetailField label='Transaction ID' value={entry.transactionId} />
+      <DetailField label='Entry ID' value={entry._id} />
+      <DetailField label='Bucket' value={entry.bucket} />
+      <DetailField label='Direction' value={entry.direction} />
+      <DetailField label='Entry Type' value={entry.entryType} />
+      <DetailField label='Amount' value={formatKobo(entry.amount)} />
+      <DetailField
+        label='Balance After (Available)'
+        value={formatKobo(entry.balanceAfterAvailable)}
+      />
+      <DetailField
+        label='Balance After (Pending)'
+        value={formatKobo(entry.balanceAfterPending)}
+      />
+      <DetailField
+        label='Actor'
+        value={`${entry.actor.type}${
+          entry.actor.id ? ` · ${entry.actor.id}` : ""
+        }`}
+      />
+      <DetailField label='Source' value={entry.source} />
+      <DetailField label='Trace ID' value={entry.traceId} />
+      <DetailField label='Dedupe Key' value={entry.dedupeKey ?? "—"} />
+      <DetailField label='Narration' value={entry.narration ?? "—"} />
+      <DetailField
+        label='Created'
+        value={new Date(entry.createdAt).toLocaleString()}
+      />
+    </div>
+  );
+}
+
 export function WalletDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [reverseTarget, setReverseTarget] = useState<string | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const { data, isLoading, isError } = useLedger(id ?? "", {
     page,
@@ -74,6 +130,7 @@ export function WalletDetailPage() {
           <table className='w-full text-left text-sm'>
             <thead>
               <tr className='border-b border-[var(--color-border)] bg-admin-bg/40'>
+                <th className='w-8 px-2 py-3' />
                 <th className='px-4 py-3 text-[10px] font-bold uppercase tracking-[0.15em] text-admin-muted'>
                   Type
                 </th>
@@ -98,48 +155,76 @@ export function WalletDetailPage() {
               </tr>
             </thead>
             <tbody>
-              {entries.map((entry) => (
-                <tr
-                  key={entry._id}
-                  className='border-b border-[var(--color-border)] bg-admin-surface last:border-b-0'>
-                  <td className='px-4 py-3 text-[10px] font-bold uppercase tracking-[0.1em] text-admin-muted'>
-                    {entry.entryType}
-                  </td>
-                  <td className='px-4 py-3'>
-                    <span
-                      className={`text-[10px] font-bold uppercase tracking-[0.1em] ${
-                        entry.direction === "CREDIT"
-                          ? "text-[var(--color-success)]"
-                          : "text-[var(--color-error)]"
-                      }`}>
-                      {entry.direction}
-                    </span>
-                  </td>
-                  <td className='px-4 py-3 font-semibold tabular-nums text-admin-ink'>
-                    {formatKobo(entry.amount)}
-                  </td>
-                  <td className='max-w-[200px] truncate px-4 py-3 text-xs text-admin-text'>
-                    {entry.narration ?? "—"}
-                  </td>
-                  <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
-                    {formatKobo(entry.balanceAfterAvailable)}
-                  </td>
-                  <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
-                    {new Date(entry.createdAt).toLocaleString()}
-                  </td>
-                  <td className='px-4 py-3'>
-                    {entry.entryType !== "REVERSAL" && (
-                      <button
-                        type='button'
-                        title='Reverse this transaction'
-                        className='text-admin-muted transition-colors hover:text-[var(--color-error)]'
-                        onClick={() => setReverseTarget(entry.transactionId)}>
-                        <RotateCcw size={14} />
-                      </button>
+              {entries.map((entry) => {
+                const isExpanded = expandedId === entry._id;
+                return (
+                  <>
+                    <tr
+                      key={entry._id}
+                      className={`cursor-pointer border-b border-[var(--color-border)] bg-admin-surface transition-colors hover:bg-admin-bg/60 ${
+                        isExpanded ? "bg-admin-bg/60" : ""
+                      } last:border-b-0`}
+                      onClick={() =>
+                        setExpandedId(isExpanded ? null : entry._id)
+                      }>
+                      <td className='px-2 py-3 text-admin-muted'>
+                        <ChevronDown
+                          size={14}
+                          className={`transition-transform duration-200 ${
+                            isExpanded ? "rotate-180" : ""
+                          }`}
+                        />
+                      </td>
+                      <td className='px-4 py-3 text-[10px] font-bold uppercase tracking-[0.1em] text-admin-muted'>
+                        {entry.entryType}
+                      </td>
+                      <td className='px-4 py-3'>
+                        <span
+                          className={`text-[10px] font-bold uppercase tracking-[0.1em] ${
+                            entry.direction === "CREDIT"
+                              ? "text-[var(--color-success)]"
+                              : "text-[var(--color-error)]"
+                          }`}>
+                          {entry.direction}
+                        </span>
+                      </td>
+                      <td className='px-4 py-3 font-semibold tabular-nums text-admin-ink'>
+                        {formatKobo(entry.amount)}
+                      </td>
+                      <td className='max-w-[200px] truncate px-4 py-3 text-xs text-admin-text'>
+                        {entry.narration ?? "—"}
+                      </td>
+                      <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
+                        {formatKobo(entry.balanceAfterAvailable)}
+                      </td>
+                      <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
+                        {new Date(entry.createdAt).toLocaleString()}
+                      </td>
+                      <td className='px-4 py-3'>
+                        {entry.entryType !== "REVERSAL" && (
+                          <button
+                            type='button'
+                            title='Reverse this transaction'
+                            className='text-admin-muted transition-colors hover:text-[var(--color-error)]'
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setReverseTarget(entry.transactionId);
+                            }}>
+                            <RotateCcw size={14} />
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                    {isExpanded && (
+                      <tr key={`${entry._id}-detail`}>
+                        <td colSpan={8} className='p-0'>
+                          <EntryDetailPanel entry={entry} />
+                        </td>
+                      </tr>
                     )}
-                  </td>
-                </tr>
-              ))}
+                  </>
+                );
+              })}
             </tbody>
           </table>
         </div>
