@@ -52,4 +52,7 @@ export const API_ENDPOINTS = {
     REVERSE: (txId: string) => `/wallets/transactions/${txId}/reverse`,
     ADJUST: (id: string) => `/wallets/${id}/adjust`,
   },
+  DASHBOARD: {
+    STATS: "/admin/dashboard/stats",
+  },
 } as const;

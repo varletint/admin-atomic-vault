@@ -37,4 +37,7 @@ export const QUERY_KEYS = {
     RECONCILE: (walletId: string) =>
       ["wallets", "reconcile", walletId] as const,
   },
+  DASHBOARD: {
+    STATS: ["dashboard", "stats"] as const,
+  },
 } as const;

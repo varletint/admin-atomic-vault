@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useDashboardStats } from "../hooks/useDashboard";
 import { DashboardTabs } from "../components/DashboardTabs";
 import { SparklineCard } from "../components/SparklineCard";
 import {
@@ -33,8 +34,10 @@ import {
 
 export function DashboardPage() {
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<DashboardTab>("Profit");
-  const cards = getTabCards(activeTab);
+  const [activeTab, setActiveTab] = useState<DashboardTab>("Revenue");
+  const { data: stats, isLoading } = useDashboardStats();
+
+  const cards = getTabCards(activeTab, stats);
 
   return (
     <>
@@ -99,9 +102,17 @@ export function DashboardPage() {
           </div>
 
           <div className='grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-3'>
-            {cards.map((card) => (
-              <SparklineCard key={`${activeTab}-${card.title}`} {...card} />
-            ))}
+            {isLoading ? (
+              <>
+                <div className='h-[180px] bg-admin-bg/30 animate-pulse border border-[var(--color-border)]' />
+                <div className='h-[180px] bg-admin-bg/30 animate-pulse border border-[var(--color-border)]' />
+                <div className='h-[180px] bg-admin-bg/30 animate-pulse border border-[var(--color-border)]' />
+              </>
+            ) : (
+              cards.map((card) => (
+                <SparklineCard key={`${activeTab}-${card.title}`} {...card} />
+              ))
+            )}
           </div>
         </section>
       </div>
