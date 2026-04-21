@@ -110,7 +110,7 @@ export function ProductsTable({ products }: ProductsTableProps) {
                         </span>
                       )}
                   </td>
-                  {/* Stock*/}
+                  {/* Stock */}
                   <td className='px-4 py-3 text-sm tabular-nums'>
                     <span
                       className={
