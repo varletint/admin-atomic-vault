@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { ArrowLeft, RefreshCw, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { ROUTES } from "@/config";
+import { formatCurrency, formatDate } from "@/utils/format";
 import {
   useOrder,
   useUpdateOrderStatus,
@@ -12,24 +13,6 @@ import {
 import { OrderStatusBadge } from "../components/OrderStatusBadge";
 import { OrderTimeline } from "../components/OrderTimeline";
 import { UpdateStatusModal } from "../components/UpdateStatusModal";
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 0,
-  }).format(amount / 100);
-}
-
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(dateStr));
-}
 
 export function OrderDetailPage() {
   const { id } = useParams<{ id: string }>();

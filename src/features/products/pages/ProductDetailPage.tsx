@@ -18,24 +18,7 @@ import {
 } from "../hooks/useProducts";
 import { ProductStatusBadge } from "../components/ProductStatusBadge";
 import type { ProductVariant } from "../types";
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 0,
-  }).format(amount / 100);
-}
-
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(dateStr));
-}
+import { formatCurrency, formatDate } from "@/utils/format";
 
 // function getPrimaryImage(product: Product): string | null {
 //   const primary = product.images.find((img) => img.isPrimary);

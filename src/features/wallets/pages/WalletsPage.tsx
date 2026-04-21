@@ -4,14 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Plus, RefreshCw } from "lucide-react";
 import { useStoreWallet, useLedger } from "../hooks/useWallets";
 import { AdjustDialog } from "../components/AdjustDialog";
-
-function formatKobo(kobo: number): string {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 2,
-  }).format(kobo / 100);
-}
+import { formatCurrency } from "@/utils/format";
 
 export function WalletsPage() {
   const navigate = useNavigate();
@@ -92,7 +85,7 @@ export function WalletsPage() {
               Available
             </p>
             <p className='mt-2 text-lg font-bold tabular-nums text-admin-ink'>
-              {formatKobo(wallet.available)}
+              {formatCurrency(wallet.available)}
             </p>
           </div>
           <div className='bg-admin-surface p-5'>
@@ -100,7 +93,7 @@ export function WalletsPage() {
               Pending
             </p>
             <p className='mt-2 text-lg font-bold tabular-nums text-admin-ink'>
-              {formatKobo(wallet.pending)}
+              {formatCurrency(wallet.pending)}
             </p>
           </div>
           <div className='bg-admin-surface p-5'>
@@ -180,7 +173,7 @@ export function WalletsPage() {
                         </span>
                       </td>
                       <td className='px-4 py-3 font-semibold tabular-nums text-admin-ink'>
-                        {formatKobo(entry.amount)}
+                        {formatCurrency(entry.amount)}
                       </td>
                       <td className='px-4 py-3 text-xs text-admin-text'>
                         {entry.narration ?? "—"}

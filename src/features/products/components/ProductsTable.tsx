@@ -1,17 +1,10 @@
 import { Link } from "react-router-dom";
 import { ProductStatusBadge } from "./ProductStatusBadge";
 import type { Product } from "../types";
+import { formatCurrency } from "@/utils/format";
 
 interface ProductsTableProps {
   products: Product[];
-}
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 0,
-  }).format(amount / 100);
 }
 
 function formatDate(dateStr: string) {

@@ -11,14 +11,7 @@ import {
 import { useLedger } from "../hooks/useWallets";
 import { ReverseDialog } from "../components/ReverseDialog";
 import type { LedgerEntry } from "../types";
-
-function formatKobo(kobo: number): string {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 2,
-  }).format(kobo / 100);
-}
+import { formatCurrency } from "@/utils/format";
 
 function DetailField({ label, value }: { label: string; value: string }) {
   return (
@@ -41,14 +34,14 @@ function EntryDetailPanel({ entry }: { entry: LedgerEntry }) {
       <DetailField label='Bucket' value={entry.bucket} />
       <DetailField label='Direction' value={entry.direction} />
       <DetailField label='Entry Type' value={entry.entryType} />
-      <DetailField label='Amount' value={formatKobo(entry.amount)} />
+      <DetailField label='Amount' value={formatCurrency(entry.amount)} />
       <DetailField
         label='Balance After (Available)'
-        value={formatKobo(entry.balanceAfterAvailable)}
+        value={formatCurrency(entry.balanceAfterAvailable)}
       />
       <DetailField
         label='Balance After (Pending)'
-        value={formatKobo(entry.balanceAfterPending)}
+        value={formatCurrency(entry.balanceAfterPending)}
       />
       <DetailField
         label='Actor'
@@ -121,7 +114,7 @@ export function WalletDetailPage() {
             Wallet Ledger
           </h3>
           <p className='mt-1 text-sm text-admin-muted'>
-            {wallet.currency} · {formatKobo(wallet.available)} available ·{" "}
+            {wallet.currency} · {formatCurrency(wallet.available)} available ·{" "}
             {total} entries
           </p>
         </div>
@@ -189,13 +182,13 @@ export function WalletDetailPage() {
                         </span>
                       </td>
                       <td className='px-4 py-3 font-semibold tabular-nums text-admin-ink'>
-                        {formatKobo(entry.amount)}
+                        {formatCurrency(entry.amount)}
                       </td>
                       <td className='max-w-[200px] truncate px-4 py-3 text-xs text-admin-text'>
                         {entry.narration ?? "—"}
                       </td>
                       <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
-                        {formatKobo(entry.balanceAfterAvailable)}
+                        {formatCurrency(entry.balanceAfterAvailable)}
                       </td>
                       <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
                         {new Date(entry.createdAt).toLocaleString()}

@@ -1,37 +1,15 @@
 import { Link } from "react-router-dom";
 import { OrderStatusBadge } from "./OrderStatusBadge";
 import type { Order } from "../types";
-
+import { formatCurrency, formatDate, truncateId } from "@/utils/format";
 interface OrdersTableProps {
   orders: Order[];
-}
-
-function formatCurrency(amount: number) {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 0,
-  }).format(amount / 100);
-}
-
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(dateStr));
 }
 
 function getCustomerName(user: Order["user"]): string {
   if (!user) return "Guest";
   if (typeof user === "string") return user;
   return user.name || user.email;
-}
-
-function truncateId(id: string) {
-  return `#${id.slice(-8).toUpperCase()}`;
 }
 
 export function OrdersTable({ orders }: OrdersTableProps) {
