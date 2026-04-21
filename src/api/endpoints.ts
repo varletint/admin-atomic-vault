@@ -24,6 +24,7 @@ export const API_ENDPOINTS = {
     REACTIVATE: (id: string) => `/products/${id}/reactivate`,
     CATEGORIES: "/products/categories",
     BRANDS: "/products/brands",
+    STATS: "/products/stats",
   },
   STORAGE: {
     UPLOAD_URL: "/storage/upload-url",
