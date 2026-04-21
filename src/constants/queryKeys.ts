@@ -15,6 +15,7 @@ export const QUERY_KEYS = {
     DETAIL: (id: string) => ["products", "detail", id] as const,
     CATEGORIES: ["products", "categories"] as const,
     BRANDS: ["products", "brands"] as const,
+    STATS: (productId?: string) => ["products", "stats", productId] as const,
   },
   INVENTORY: {
     ALL: ["inventory"] as const,

@@ -15,6 +15,7 @@ import {
   useProduct,
   useDeactivateProduct,
   useReactivateProduct,
+  useProductSalesStats,
 } from "../hooks/useProducts";
 import { ProductStatusBadge } from "../components/ProductStatusBadge";
 import type { ProductVariant } from "../types";
@@ -67,6 +68,7 @@ export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   // const navigate = useNavigate();
   const { data: product, isLoading, isError } = useProduct(id ?? "");
+  const { data: salesStats } = useProductSalesStats(id);
   const deactivate = useDeactivateProduct();
   const reactivate = useReactivateProduct();
   const [showConfirm, setShowConfirm] = useState(false);
@@ -277,6 +279,40 @@ export function ProductDetailPage() {
                 <Warehouse size={14} />
                 Manage Inventory
               </Link>
+            </section>
+
+            {/* Sales Stats */}
+            <section className='border border-[var(--color-border)] bg-admin-surface p-4'>
+              <h2 className='mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-admin-muted'>
+                Sales Performance
+              </h2>
+              <InfoRow
+                label='Units Sold'
+                value={
+                  <span className='font-bold'>
+                    {salesStats?.totalUnitsSold ?? "—"}
+                  </span>
+                }
+              />
+              <InfoRow
+                label='Revenue'
+                value={
+                  <span className='font-bold'>
+                    {salesStats ? formatCurrency(salesStats.totalRevenue) : "—"}
+                  </span>
+                }
+              />
+              <InfoRow label='Orders' value={salesStats?.orderCount ?? "—"} />
+              <InfoRow
+                label='Inventory Value'
+                value={
+                  <span className='font-bold'>
+                    {product.available > 0
+                      ? formatCurrency(product.available * product.price)
+                      : "—"}
+                  </span>
+                }
+              />
             </section>
 
             {/* Details */}

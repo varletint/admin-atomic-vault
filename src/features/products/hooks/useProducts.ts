@@ -208,3 +208,16 @@ export function useBrands() {
     staleTime: 5 * 60 * 1000,
   });
 }
+
+/* ── Sales Stats ────────────────────────── */
+
+export function useProductSalesStats(productId?: string) {
+  return useQuery({
+    queryKey: QUERY_KEYS.PRODUCTS.STATS(productId),
+    queryFn: async () => {
+      const { data } = await productApi.getSalesStats(productId);
+      return data.data;
+    },
+    staleTime: 2 * 60 * 1000,
+  });
+}

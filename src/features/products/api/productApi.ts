@@ -45,4 +45,15 @@ export const productApi = {
 
   getBrands: () =>
     api.get<ApiResponse<string[]>>(API_ENDPOINTS.PRODUCTS.BRANDS),
+
+  getSalesStats: (productId?: string) =>
+    api.get<
+      ApiResponse<{
+        totalUnitsSold: number;
+        totalRevenue: number;
+        orderCount: number;
+      }>
+    >(API_ENDPOINTS.PRODUCTS.STATS, {
+      params: productId ? { productId } : undefined,
+    }),
 };
