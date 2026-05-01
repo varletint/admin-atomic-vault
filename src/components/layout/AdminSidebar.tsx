@@ -5,6 +5,7 @@ import {
   ShoppingBag,
   Users,
   Landmark,
+  ArrowDownToLine,
   X,
 } from "lucide-react";
 import { ROUTES } from "@/config";
@@ -15,6 +16,7 @@ const nav = [
   { to: ROUTES.ORDERS, label: "Orders", icon: Package },
   { to: ROUTES.USERS, label: "Users", icon: Users },
   { to: ROUTES.WALLETS, label: "Wallets", icon: Landmark },
+  { to: ROUTES.WITHDRAWALS, label: "Withdrawals", icon: ArrowDownToLine },
 ];
 
 interface AdminSidebarProps {
