@@ -58,4 +58,7 @@ export const API_ENDPOINTS = {
     INITIATE: "/withdrawals",
     RESOLVE_ACCOUNT: "/withdrawals/resolve-account",
   },
+  DASHBOARD: {
+    STATS: "/admin/dashboard/stats",
+  },
 } as const;
