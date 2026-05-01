@@ -37,6 +37,12 @@ export const QUERY_KEYS = {
     RECONCILE: (walletId: string) =>
       ["wallets", "reconcile", walletId] as const,
   },
+  WITHDRAWALS: {
+    ALL: ["withdrawals"] as const,
+    LIST: (filters?: Record<string, unknown>) =>
+      ["withdrawals", "list", filters] as const,
+    DETAIL: (id: string) => ["withdrawals", "detail", id] as const,
+  },
   DASHBOARD: {
     STATS: ["dashboard", "stats"] as const,
   },
