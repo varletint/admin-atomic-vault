@@ -52,4 +52,10 @@ export const API_ENDPOINTS = {
     REVERSE: (txId: string) => `/wallets/transactions/${txId}/reverse`,
     ADJUST: (id: string) => `/wallets/${id}/adjust`,
   },
+  WITHDRAWALS: {
+    LIST: "/withdrawals",
+    DETAIL: (id: string) => `/withdrawals/${id}`,
+    INITIATE: "/withdrawals",
+    RESOLVE_ACCOUNT: "/withdrawals/resolve-account",
+  },
 } as const;
