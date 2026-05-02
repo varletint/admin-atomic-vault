@@ -277,7 +277,7 @@ export function WithdrawalInitiateDialog({
             type='button'
             className='btn btn-primary'
             onClick={handleNext}>
-            Review & Withdraw
+            Review
           </button>
         </div>
       </div>

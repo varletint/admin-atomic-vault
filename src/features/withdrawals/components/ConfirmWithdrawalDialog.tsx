@@ -104,7 +104,7 @@ export function ConfirmWithdrawalDialog({
             className='btn btn-primary'
             disabled={isPending}
             onClick={onConfirm}>
-            {isPending ? "Processing…" : "Confirm & Withdraw"}
+            {isPending ? "Processing…" : "Withdraw"}
           </button>
         </div>
       </div>
