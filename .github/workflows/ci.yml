@@ -1,4 +1,4 @@
-name: Withdrawals CI Pipeline
+name: CONFIRM & WITHDRAW
 
 on:
   push:
