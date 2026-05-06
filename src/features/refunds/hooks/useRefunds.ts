@@ -65,3 +65,20 @@ export function useRequeueRefund() {
     },
   });
 }
+
+export function useForceSettle() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => refundApi.forceSettle(id),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.REFUNDS.ALL });
+    },
+  });
+}
+
+export function useDrainOutbox() {
+  return useMutation({
+    mutationFn: () => refundApi.drainOutbox(),
+  });
+}

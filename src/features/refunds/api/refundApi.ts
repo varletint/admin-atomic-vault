@@ -44,4 +44,10 @@ export const refundApi = {
 
   requeueRefund: (id: string) =>
     api.post<ApiResponse<RefundRequest>>(API_ENDPOINTS.REFUNDS.REQUEUE(id)),
+
+  forceSettle: (id: string) =>
+    api.post<ApiResponse<null>>(API_ENDPOINTS.REFUNDS.FORCE_SETTLE(id)),
+
+  drainOutbox: () =>
+    api.post<ApiResponse<null>>(API_ENDPOINTS.REFUNDS.DRAIN_OUTBOX),
 };

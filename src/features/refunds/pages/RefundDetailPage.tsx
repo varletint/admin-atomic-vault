@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, Check, X, RotateCcw } from "lucide-react";
+import { ArrowLeft, Check, X, RotateCcw, Zap, Play } from "lucide-react";
 import { toast } from "sonner";
 import { ROUTES } from "@/config";
 import { formatCurrency, formatDate } from "@/utils/format";
@@ -10,6 +10,8 @@ import {
   useApproveRefund,
   useRejectRefund,
   useRequeueRefund,
+  useForceSettle,
+  useDrainOutbox,
 } from "../hooks/useRefunds";
 import { RefundStatusBadge } from "../components/RefundStatusBadge";
 import { RefundTimeline } from "../components/RefundTimeline";
@@ -22,6 +24,8 @@ export function RefundDetailPage() {
   const approveRefund = useApproveRefund();
   const rejectRefund = useRejectRefund();
   const requeueRefund = useRequeueRefund();
+  const forceSettle = useForceSettle();
+  const drainOutbox = useDrainOutbox();
 
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
@@ -57,6 +61,7 @@ export function RefundDetailPage() {
   const canApprove = refund.status === "AWAITING_REVIEW";
   const canReject = refund.status === "AWAITING_REVIEW";
   const canRequeue = refund.status === "FAILED";
+  const canForceSettle = refund.status === "GATEWAY_PENDING";
 
   const customerName =
     refund.userId && typeof refund.userId === "object"
@@ -131,6 +136,34 @@ export function RefundDetailPage() {
                 Requeue
               </button>
             )}
+            {canForceSettle && (
+              <button
+                type="button"
+                className="btn btn-secondary"
+                disabled={forceSettle.isPending}
+                onClick={() => {
+                  forceSettle.mutate(refund._id, {
+                    onSuccess: () => toast.success("Refund force-settled."),
+                    onError: () => toast.error("Failed to force-settle."),
+                  });
+                }}>
+                <Zap size={14} />
+                {forceSettle.isPending ? "Settling…" : "Force Settle"}
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn btn-secondary"
+              disabled={drainOutbox.isPending}
+              onClick={() => {
+                drainOutbox.mutate(undefined, {
+                  onSuccess: () => toast.success("Outbox drain scheduled."),
+                  onError: () => toast.error("Failed to drain outbox."),
+                });
+              }}>
+              <Play size={14} />
+              {drainOutbox.isPending ? "Draining…" : "Drain Outbox"}
+            </button>
           </div>
         </div>
 

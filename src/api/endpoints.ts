@@ -64,6 +64,8 @@ export const API_ENDPOINTS = {
     APPROVE: (id: string) => `/refunds/${id}/approve`,
     REJECT: (id: string) => `/refunds/${id}/reject`,
     REQUEUE: (id: string) => `/refunds/${id}/requeue`,
+    FORCE_SETTLE: (id: string) => `/refunds/${id}/force-settle`,
+    DRAIN_OUTBOX: "/refunds/ops/drain-outbox",
   },
   DASHBOARD: {
     STATS: "/admin/dashboard/stats",
