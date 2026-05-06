@@ -13,4 +13,6 @@ export const ROUTES = {
   WALLET_DETAIL: "/wallets/:id",
   WITHDRAWALS: "/withdrawals",
   WITHDRAWAL_DETAIL: "/withdrawals/:id",
+  REFUNDS: "/refunds",
+  REFUND_DETAIL: "/refunds/:id",
 } as const;

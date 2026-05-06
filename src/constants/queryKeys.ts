@@ -43,6 +43,12 @@ export const QUERY_KEYS = {
       ["withdrawals", "list", filters] as const,
     DETAIL: (id: string) => ["withdrawals", "detail", id] as const,
   },
+  REFUNDS: {
+    ALL: ["refunds"] as const,
+    LIST: (filters?: Record<string, unknown>) =>
+      ["refunds", "list", filters] as const,
+    DETAIL: (id: string) => ["refunds", "detail", id] as const,
+  },
   DASHBOARD: {
     STATS: ["dashboard", "stats"] as const,
   },

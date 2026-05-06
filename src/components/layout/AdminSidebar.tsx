@@ -6,6 +6,7 @@ import {
   Users,
   Landmark,
   ArrowDownToLine,
+  RotateCcw,
   X,
 } from "lucide-react";
 import { ROUTES } from "@/config";
@@ -14,6 +15,7 @@ const nav = [
   { to: ROUTES.DASHBOARD, label: "Overview", icon: LayoutDashboard },
   { to: ROUTES.PRODUCTS, label: "Products", icon: ShoppingBag },
   { to: ROUTES.ORDERS, label: "Orders", icon: Package },
+  { to: ROUTES.REFUNDS, label: "Refunds", icon: RotateCcw },
   { to: ROUTES.USERS, label: "Users", icon: Users },
   { to: ROUTES.WALLETS, label: "Wallets", icon: Landmark },
   { to: ROUTES.WITHDRAWALS, label: "Withdrawals", icon: ArrowDownToLine },

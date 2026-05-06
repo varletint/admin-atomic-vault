@@ -58,6 +58,13 @@ export const API_ENDPOINTS = {
     INITIATE: "/withdrawals",
     RESOLVE_ACCOUNT: "/withdrawals/resolve-account",
   },
+  REFUNDS: {
+    LIST: "/refunds",
+    DETAIL: (id: string) => `/refunds/${id}`,
+    APPROVE: (id: string) => `/refunds/${id}/approve`,
+    REJECT: (id: string) => `/refunds/${id}/reject`,
+    REQUEUE: (id: string) => `/refunds/${id}/requeue`,
+  },
   DASHBOARD: {
     STATS: "/admin/dashboard/stats",
   },

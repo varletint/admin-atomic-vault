@@ -17,6 +17,8 @@ import { WalletsPage } from "@/features/wallets/pages/WalletsPage";
 import { WalletDetailPage } from "@/features/wallets/pages/WalletDetailPage";
 import { WithdrawalsPage } from "@/features/withdrawals/pages/WithdrawalsPage";
 import { WithdrawalDetailPage } from "@/features/withdrawals/pages/WithdrawalDetailPage";
+import { RefundsPage } from "@/features/refunds/pages/RefundsPage";
+import { RefundDetailPage } from "@/features/refunds/pages/RefundDetailPage";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import "./App.css";
 import { AuthGuard } from "./guards/AuthGuard";
@@ -56,6 +58,8 @@ export default function App() {
             <Route index element={<DashboardPage />} />
             <Route path='orders' element={<OrdersPage />} />
             <Route path='orders/:id' element={<OrderDetailPage />} />
+            <Route path='refunds' element={<RefundsPage />} />
+            <Route path='refunds/:id' element={<RefundDetailPage />} />
             <Route path='products' element={<ProductsPage />} />
             <Route path='products/new' element={<CreateProductPage />} />
             <Route path='products/:id' element={<ProductDetailPage />} />

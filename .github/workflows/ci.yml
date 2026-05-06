@@ -1,10 +1,10 @@
-name: CONFIRM & WITHDRAW
+name: CI enterprise-refunds
 
 on:
   push:
-    branches: ["feat/admin-withdrawals", "main"]
+    branches: ["feat/enterprise-refunds", "main"]
   pull_request:
-    branches: ["main", "feat/admin-withdrawals"]
+    branches: ["main", "feat/enterprise-refunds"]
 
 jobs:
   build-and-test:
