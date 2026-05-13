@@ -70,4 +70,11 @@ export const API_ENDPOINTS = {
   DASHBOARD: {
     STATS: "/admin/dashboard/stats",
   },
+  SETTLEMENTS: {
+    LIST: "/settlements",
+    DETAIL: (id: string) => `/settlements/${id}`,
+  },
+  AUDIT_LOGS: {
+    LIST: "/audit-logs",
+  },
 } as const;
