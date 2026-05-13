@@ -1,10 +1,10 @@
-name: CI admin-layout-overhaul
+name: CI dashboard-widgets
 
 on:
   push:
-    branches: ["feat/admin-layout-overhaul", "main"]
+    branches: ["feat/dashboard-widgets", "main"]
   pull_request:
-    branches: ["main", "feat/admin-layout-overhaul"]
+    branches: ["main", "feat/dashboard-widgets"]
 
 jobs:
   build-and-test:
