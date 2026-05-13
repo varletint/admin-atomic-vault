@@ -14,6 +14,8 @@ const SEGMENT_LABELS: Record<string, string> = {
   users: "Users",
   wallets: "Wallets",
   withdrawals: "Withdrawals",
+  settlements: "Settlements",
+  "audit-logs": "Audit Logs",
   new: "Create",
   edit: "Edit",
   inventory: "Inventory",
