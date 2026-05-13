@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { useDashboardStats } from "../hooks/useDashboard";
 import { DashboardTabs } from "../components/DashboardTabs";
 import { SparklineCard } from "../components/SparklineCard";
@@ -104,9 +105,9 @@ export function DashboardPage() {
           <div className='grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-3'>
             {isLoading ? (
               <>
-                <div className='h-[180px] bg-admin-bg/30 animate-pulse border border-[var(--color-border)]' />
-                <div className='h-[180px] bg-admin-bg/30 animate-pulse border border-[var(--color-border)]' />
-                <div className='h-[180px] bg-admin-bg/30 animate-pulse border border-[var(--color-border)]' />
+                <Skeleton.Card />
+                <Skeleton.Card />
+                <Skeleton.Card />
               </>
             ) : (
               cards.map((card) => (

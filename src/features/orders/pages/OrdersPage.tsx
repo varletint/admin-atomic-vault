@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search } from "lucide-react";
+import { Pagination } from "@/components/ui/Pagination";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { useOrders } from "../hooks/useOrders";
 import { OrdersTable } from "../components/OrdersTable";
 import type { OrderStatus } from "../types";
@@ -90,11 +92,7 @@ export function OrdersPage() {
         {/* Content */}
         <div className='mt-6'>
           {isLoading ? (
-            <div className='border border-[var(--color-border)] bg-admin-surface p-12 text-center'>
-              <p className='animate-pulse text-xs font-semibold uppercase tracking-[0.2em] text-admin-muted'>
-                Loading orders…
-              </p>
-            </div>
+            <Skeleton.TableRows rows={8} cols={5} />
           ) : isError ? (
             <div className='border border-[var(--color-border)] bg-admin-surface p-12 text-center'>
               <p className='text-sm font-semibold text-[var(--color-error)]'>
@@ -107,31 +105,7 @@ export function OrdersPage() {
         </div>
 
         {/* Pagination */}
-        {totalPages > 1 && (
-          <div className='mt-6 flex items-center justify-between border-t border-[var(--color-border)] pt-4'>
-            <p className='text-xs text-admin-faint'>
-              Page {page} of {totalPages}
-            </p>
-            <div className='flex gap-2'>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                disabled={page <= 1}
-                onClick={() => setPage((p) => p - 1)}>
-                <ChevronLeft size={14} />
-                <span className='hidden sm:inline'>Prev</span>
-              </button>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                disabled={page >= totalPages}
-                onClick={() => setPage((p) => p + 1)}>
-                <span className='hidden sm:inline'>Next</span>
-                <ChevronRight size={14} />
-              </button>
-            </div>
-          </div>
-        )}
+        <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     </>
   );

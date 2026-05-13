@@ -4,10 +4,9 @@ import { Helmet } from "react-helmet-async";
 import {
   ArrowLeft,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   RotateCcw,
 } from "lucide-react";
+import { Pagination } from "@/components/ui/Pagination";
 import { useLedger } from "../hooks/useWallets";
 import { ReverseDialog } from "../components/ReverseDialog";
 import type { LedgerEntry } from "../types";
@@ -222,31 +221,7 @@ export function WalletDetailPage() {
           </table>
         </div>
 
-        {totalPages > 1 && (
-          <div className='mt-6 flex items-center justify-between border-t border-[var(--color-border)] pt-4'>
-            <p className='text-xs text-admin-faint'>
-              Page {page} of {totalPages}
-            </p>
-            <div className='flex gap-2'>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                disabled={page <= 1}
-                onClick={() => setPage((p) => p - 1)}>
-                <ChevronLeft size={14} />
-                <span className='hidden sm:inline'>Prev</span>
-              </button>
-              <button
-                type='button'
-                className='btn btn-secondary'
-                disabled={page >= totalPages}
-                onClick={() => setPage((p) => p + 1)}>
-                <span className='hidden sm:inline'>Next</span>
-                <ChevronRight size={14} />
-              </button>
-            </div>
-          </div>
-        )}
+        <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
 
       {reverseTarget && (
