@@ -19,6 +19,9 @@ import { WithdrawalsPage } from "@/features/withdrawals/pages/WithdrawalsPage";
 import { WithdrawalDetailPage } from "@/features/withdrawals/pages/WithdrawalDetailPage";
 import { RefundsPage } from "@/features/refunds/pages/RefundsPage";
 import { RefundDetailPage } from "@/features/refunds/pages/RefundDetailPage";
+import { SettlementsPage } from "@/features/settlements/pages/SettlementsPage";
+import { SettlementDetailPage } from "@/features/settlements/pages/SettlementDetailPage";
+import { AuditLogsPage } from "@/features/audit-logs/pages/AuditLogsPage";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import "./App.css";
 import { AuthGuard } from "./guards/AuthGuard";
@@ -74,6 +77,9 @@ export default function App() {
             <Route path='wallets/:id' element={<WalletDetailPage />} />
             <Route path='withdrawals' element={<WithdrawalsPage />} />
             <Route path='withdrawals/:id' element={<WithdrawalDetailPage />} />
+            <Route path='settlements' element={<SettlementsPage />} />
+            <Route path='settlements/:id' element={<SettlementDetailPage />} />
+            <Route path='audit-logs' element={<AuditLogsPage />} />
           </Route>
           <Route path='*' element={<Navigate to={ROUTES.LOGIN} replace />} />
         </Routes>
