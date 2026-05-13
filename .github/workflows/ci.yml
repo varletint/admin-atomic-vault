@@ -1,10 +1,10 @@
-name: CI ui-modernization
+name: CI admin-layout-overhaul
 
 on:
   push:
-    branches: ["feat/ui-modernization", "main"]
+    branches: ["feat/admin-layout-overhaul", "main"]
   pull_request:
-    branches: ["main", "feat/ui-modernization"]
+    branches: ["main", "feat/admin-layout-overhaul"]
 
 jobs:
   build-and-test:
