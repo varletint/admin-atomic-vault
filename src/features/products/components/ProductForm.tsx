@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ChevronDown, Globe } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
@@ -29,6 +30,118 @@ interface ProductFormProps {
   ) => void;
   isSubmitting: boolean;
   onCancel: () => void;
+}
+
+function SeoSection({
+  register,
+  watch,
+}: {
+  register: ReturnType<typeof useForm>["register"];
+  watch: ReturnType<typeof useForm>["watch"];
+}) {
+  const [open, setOpen] = useState(false);
+  const metaTitle = (watch("seoMetaTitle" as any) as string) ?? "";
+  const metaDesc = (watch("seoMetaDescription" as any) as string) ?? "";
+
+  return (
+    <section className='border border-[var(--color-border)] bg-admin-surface p-6'>
+      <button
+        type='button'
+        onClick={() => setOpen(!open)}
+        className='flex w-full items-center justify-between text-sm font-bold uppercase tracking-widest text-admin-ink'>
+        <span className='flex items-center gap-2'>
+          <Globe size={16} />
+          SEO
+        </span>
+        <ChevronDown
+          size={16}
+          className={`transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {open && (
+        <div className='mt-6 space-y-5'>
+          {/* Meta Title */}
+          <div>
+            <div className='flex items-center justify-between'>
+              <label className='input-label' htmlFor='seoMetaTitle'>
+                Meta Title
+              </label>
+              <span
+                className={`text-[10px] font-bold tabular-nums ${
+                  metaTitle.length > 70
+                    ? "text-[var(--color-error)]"
+                    : "text-admin-faint"
+                }`}>
+                {metaTitle.length}/70
+              </span>
+            </div>
+            <input
+              id='seoMetaTitle'
+              className='input-field'
+              placeholder='Page title for search engines'
+              maxLength={70}
+              {...register("seoMetaTitle" as any)}
+            />
+          </div>
+
+          {/* Meta Description */}
+          <div>
+            <div className='flex items-center justify-between'>
+              <label className='input-label' htmlFor='seoMetaDescription'>
+                Meta Description
+              </label>
+              <span
+                className={`text-[10px] font-bold tabular-nums ${
+                  metaDesc.length > 160
+                    ? "text-[var(--color-error)]"
+                    : "text-admin-faint"
+                }`}>
+                {metaDesc.length}/160
+              </span>
+            </div>
+            <textarea
+              id='seoMetaDescription'
+              rows={3}
+              className='input-field resize-none'
+              placeholder='Brief description for search engine results'
+              maxLength={160}
+              {...register("seoMetaDescription" as any)}
+            />
+          </div>
+
+          {/* Meta Keywords */}
+          <Input
+            label='Meta Keywords'
+            placeholder='e.g. shoes, running, athletic (comma-separated)'
+            {...register("seoMetaKeywords" as any)}
+          />
+
+          {/* SERP Preview */}
+          {(metaTitle || metaDesc) && (
+            <div className='mt-4 border border-dashed border-[var(--color-border)] p-4'>
+              <p className='mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-admin-faint'>
+                Search Preview
+              </p>
+              <div className='space-y-0.5'>
+                <p className='text-base text-[#1a0dab] truncate'>
+                  {metaTitle || "Product Title"}
+                </p>
+                <p className='text-xs text-[#006621] truncate'>
+                  atomicorder.com/products/...
+                </p>
+                <p className='text-sm text-[#545454] line-clamp-2'>
+                  {metaDesc || "Product description will appear here..."}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  );
 }
 
 export function ProductForm({
@@ -82,7 +195,10 @@ export function ProductForm({
       isFeatured: defaultValues?.isFeatured ?? false,
       minOrderQty: defaultValues?.minOrderQty ?? 1,
       ...(mode === "create" ? { initialStock: 0 } : {}),
-    },
+      seoMetaTitle: defaultValues?.seo?.metaTitle ?? "",
+      seoMetaDescription: defaultValues?.seo?.metaDescription ?? "",
+      seoMetaKeywords: defaultValues?.seo?.metaKeywords?.join(", ") ?? "",
+    } as any,
   });
 
   const hasVariants = watch("hasVariants");
@@ -131,6 +247,29 @@ export function ProductForm({
         .map((t) => t.trim())
         .filter(Boolean);
     }
+
+    // Build SEO object from flat fields
+    const seoTitle = (processed.seoMetaTitle as string)?.trim();
+    const seoDesc = (processed.seoMetaDescription as string)?.trim();
+    const seoKw = (processed.seoMetaKeywords as string)?.trim();
+    if (seoTitle || seoDesc || seoKw) {
+      processed.seo = {
+        ...(seoTitle ? { metaTitle: seoTitle } : {}),
+        ...(seoDesc ? { metaDescription: seoDesc } : {}),
+        ...(seoKw
+          ? {
+              metaKeywords: seoKw
+                .split(",")
+                .map((k: string) => k.trim())
+                .filter(Boolean),
+            }
+          : {}),
+      };
+    }
+    delete processed.seoMetaTitle;
+    delete processed.seoMetaDescription;
+    delete processed.seoMetaKeywords;
+
     onSubmit(processed, imageFiles);
   };
 
@@ -476,6 +615,9 @@ export function ProductForm({
           {...register("tags")}
         />
       </section>
+
+      {/* ── SEO ──────────────────────── */}
+      <SeoSection register={register} watch={watch} />
 
       {/* ── Submit ──────────────────── */}
       <div className='flex items-center justify-end gap-4 pt-4 border-t border-[var(--color-border)]'>
