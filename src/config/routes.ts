@@ -15,4 +15,7 @@ export const ROUTES = {
   WITHDRAWAL_DETAIL: "/withdrawals/:id",
   REFUNDS: "/refunds",
   REFUND_DETAIL: "/refunds/:id",
+  SETTLEMENTS: "/settlements",
+  SETTLEMENT_DETAIL: "/settlements/:id",
+  AUDIT_LOGS: "/audit-logs",
 } as const;

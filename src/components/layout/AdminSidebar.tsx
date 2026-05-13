@@ -7,6 +7,8 @@ import {
   Landmark,
   ArrowDownToLine,
   RotateCcw,
+  Banknote,
+  FileText,
   X,
 } from "lucide-react";
 import { ROUTES } from "@/config";
@@ -42,11 +44,16 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { to: ROUTES.WALLETS, label: "Wallets", icon: Landmark },
       { to: ROUTES.WITHDRAWALS, label: "Withdrawals", icon: ArrowDownToLine },
+      { to: ROUTES.SETTLEMENTS, label: "Settlements", icon: Banknote },
     ],
   },
   {
     title: "People",
     items: [{ to: ROUTES.USERS, label: "Users", icon: Users }],
+  },
+  {
+    title: "System",
+    items: [{ to: ROUTES.AUDIT_LOGS, label: "Audit Logs", icon: FileText }],
   },
 ];
 
