@@ -1,10 +1,10 @@
-name: CI dashboard-widgets
+name: CI phase4-settlement-audit
 
 on:
   push:
-    branches: ["feat/dashboard-widgets", "main"]
+    branches: ["feat/phase4-settlement-audit", "main"]
   pull_request:
-    branches: ["main", "feat/dashboard-widgets"]
+    branches: ["main", "feat/phase4-settlement-audit"]
 
 jobs:
   build-and-test:
