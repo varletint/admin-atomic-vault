@@ -52,4 +52,15 @@ export const QUERY_KEYS = {
   DASHBOARD: {
     STATS: ["dashboard", "stats"] as const,
   },
+  SETTLEMENTS: {
+    ALL: ["settlements"] as const,
+    LIST: (filters?: Record<string, unknown>) =>
+      ["settlements", "list", filters] as const,
+    DETAIL: (id: string) => ["settlements", "detail", id] as const,
+  },
+  AUDIT_LOGS: {
+    ALL: ["audit-logs"] as const,
+    LIST: (filters?: Record<string, unknown>) =>
+      ["audit-logs", "list", filters] as const,
+  },
 } as const;
