@@ -14,6 +14,7 @@ import {
   Mail,
   Key,
 } from "lucide-react";
+import { formatCurrency, formatDate } from "@/utils/format";
 import {
   useUser,
   useUserOrders,
@@ -29,23 +30,9 @@ const statusStyle: Record<string, string> = {
   DEACTIVATED: "bg-[var(--color-bg-muted)] text-admin-faint",
 };
 
-function fmtDate(d?: string | null): string {
+function fmtDateSafe(d?: string | null): string {
   if (!d) return "—";
-  return new Date(d).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
-function fmtCurrency(kobo: number): string {
-  return new Intl.NumberFormat("en-NG", {
-    style: "currency",
-    currency: "NGN",
-    minimumFractionDigits: 2,
-  }).format(kobo / 100);
+  return formatDate(d);
 }
 
 export function UserDetailPage() {
@@ -163,7 +150,7 @@ export function UserDetailPage() {
                 Joined
               </p>
               <p className='mt-2 text-sm font-semibold tabular-nums text-admin-ink'>
-                {fmtDate(user.createdAt)}
+                {fmtDateSafe(user.createdAt)}
               </p>
             </div>
             <div className='bg-admin-surface p-5'>
@@ -179,7 +166,7 @@ export function UserDetailPage() {
                 Last Updated
               </p>
               <p className='mt-2 text-sm font-semibold tabular-nums text-admin-ink'>
-                {fmtDate(user.updatedAt)}
+                {fmtDateSafe(user.updatedAt)}
               </p>
             </div>
           </div>
@@ -201,7 +188,7 @@ export function UserDetailPage() {
                   Last Login
                 </p>
                 <p className='mt-1 text-sm font-semibold tabular-nums text-admin-ink'>
-                  {fmtDate(user.auth?.lastLoginAt)}
+                  {fmtDateSafe(user.auth?.lastLoginAt)}
                 </p>
               </div>
             </div>
@@ -245,7 +232,7 @@ export function UserDetailPage() {
                   Locked Until
                 </p>
                 <p className='mt-1 text-sm font-semibold tabular-nums text-admin-ink'>
-                  {fmtDate(user.auth?.lockedUntil)}
+                  {fmtDateSafe(user.auth?.lockedUntil)}
                 </p>
               </div>
             </div>
@@ -256,7 +243,7 @@ export function UserDetailPage() {
                   Password Changed
                 </p>
                 <p className='mt-1 text-sm font-semibold tabular-nums text-admin-ink'>
-                  {fmtDate(user.auth?.passwordChangedAt)}
+                  {fmtDateSafe(user.auth?.passwordChangedAt)}
                 </p>
               </div>
             </div>
@@ -331,10 +318,10 @@ export function UserDetailPage() {
                         </span>
                       </td>
                       <td className='px-4 py-3 font-semibold tabular-nums text-admin-ink'>
-                        {fmtCurrency(order.totalAmount)}
+                        {formatCurrency(order.totalAmount)}
                       </td>
                       <td className='px-4 py-3 text-xs tabular-nums text-admin-faint'>
-                        {fmtDate(order.createdAt)}
+                        {fmtDateSafe(order.createdAt)}
                       </td>
                     </tr>
                   ))}
@@ -366,7 +353,7 @@ export function UserDetailPage() {
                           {entry.status}
                         </span>
                         <span className='text-xs tabular-nums text-admin-faint'>
-                          {fmtDate(entry.timestamp)}
+                          {fmtDateSafe(entry.timestamp)}
                         </span>
                       </div>
                       {entry.reason && (

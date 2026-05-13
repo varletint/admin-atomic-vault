@@ -1,3 +1,4 @@
+import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { TransactionStatus } from "../types";
 
 const STATUS_CONFIG: Record<
@@ -49,13 +50,10 @@ export function WithdrawalStatusBadge({ status }: WithdrawalStatusBadgeProps) {
   const config = STATUS_CONFIG[status];
 
   return (
-    <span
-      style={{
-        color: config.color,
-        backgroundColor: config.bg,
-      }}
-      className='inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em]'>
-      {config.label}
-    </span>
+    <StatusBadge
+      label={config.label}
+      color={config.color}
+      bg={config.bg}
+    />
   );
 }

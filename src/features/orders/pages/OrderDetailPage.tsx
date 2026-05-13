@@ -5,6 +5,7 @@ import { ArrowLeft, RefreshCw, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { ROUTES } from "@/config";
 import { formatCurrency, formatDate } from "@/utils/format";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import {
   useOrder,
   useUpdateOrderStatus,
@@ -262,52 +263,27 @@ export function OrderDetailPage() {
       )}
 
       {/* Cancel Confirmation */}
-      {showCancelConfirm && (
-        <>
-          <div
-            className='fixed inset-0 z-50 bg-black/40'
-            onClick={() => setShowCancelConfirm(false)}
-            aria-hidden='true'
-          />
-          <div className='fixed inset-0 z-50 flex items-center justify-center p-4'>
-            <div className='w-full max-w-sm border border-[var(--color-border)] bg-admin-surface p-6 animate-fadeIn'>
-              <h3 className='text-sm font-bold uppercase tracking-[0.12em] text-admin-ink'>
-                Cancel Order
-              </h3>
-              <p className='mt-2 text-sm text-admin-text'>
-                Are you sure you want to cancel this order? This action cannot
-                be undone.
-              </p>
-              <div className='mt-6 flex flex-col sm:flex-row  gap-3 justify-end'>
-                <button
-                  type='button'
-                  className='btn btn-secondary'
-                  onClick={() => setShowCancelConfirm(false)}
-                  disabled={cancelOrder.isPending}>
-                  Keep Order
-                </button>
-                <button
-                  type='button'
-                  className='btn btn-primary'
-                  disabled={cancelOrder.isPending}
-                  onClick={() => {
-                    cancelOrder.mutate(order._id, {
-                      onSuccess: () => {
-                        toast.success("Order cancelled");
-                        setShowCancelConfirm(false);
-                      },
-                      onError: () => {
-                        toast.error("Failed to cancel order");
-                      },
-                    });
-                  }}>
-                  {cancelOrder.isPending ? "Cancelling…" : "Cancel Order"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+      <ConfirmDialog
+        open={showCancelConfirm}
+        onClose={() => setShowCancelConfirm(false)}
+        title="Cancel Order"
+        description="Are you sure you want to cancel this order? This action cannot be undone."
+        confirmLabel={cancelOrder.isPending ? "Cancelling…" : "Cancel Order"}
+        cancelLabel="Keep Order"
+        isLoading={cancelOrder.isPending}
+        variant="danger"
+        onConfirm={() => {
+          cancelOrder.mutate(order._id, {
+            onSuccess: () => {
+              toast.success("Order cancelled");
+              setShowCancelConfirm(false);
+            },
+            onError: () => {
+              toast.error("Failed to cancel order");
+            },
+          });
+        }}
+      />
     </>
   );
 }

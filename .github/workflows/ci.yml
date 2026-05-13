@@ -1,10 +1,10 @@
-name: CI enterprise-refunds
+name: CI ui-modernization
 
 on:
   push:
-    branches: ["feat/enterprise-refunds", "main"]
+    branches: ["feat/ui-modernization", "main"]
   pull_request:
-    branches: ["main", "feat/enterprise-refunds"]
+    branches: ["main", "feat/ui-modernization"]
 
 jobs:
   build-and-test:

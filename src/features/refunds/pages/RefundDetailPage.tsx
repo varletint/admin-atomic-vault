@@ -5,6 +5,7 @@ import { ArrowLeft, Check, X, RotateCcw, Zap, Play } from "lucide-react";
 import { toast } from "sonner";
 import { ROUTES } from "@/config";
 import { formatCurrency, formatDate } from "@/utils/format";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import {
   useRefund,
   useApproveRefund,
@@ -374,53 +375,25 @@ export function RefundDetailPage() {
       )}
 
       {/* Requeue Confirmation */}
-      {showRequeueConfirm && (
-        <>
-          <div
-            className="fixed inset-0 z-50 bg-black/40"
-            onClick={() => setShowRequeueConfirm(false)}
-            aria-hidden="true"
-          />
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-sm border border-[var(--color-border)] bg-admin-surface p-6 animate-fadeIn">
-              <h3 className="text-sm font-bold uppercase tracking-[0.12em] text-admin-ink">
-                Requeue Refund
-              </h3>
-              <p className="mt-2 text-sm text-admin-text">
-                This will reset retry counters and re-dispatch the refund to the
-                payment gateway. Requeue count:{" "}
-                <strong>{refund.requeueCount}</strong>/3.
-              </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowRequeueConfirm(false)}
-                  disabled={requeueRefund.isPending}>
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  disabled={requeueRefund.isPending}
-                  onClick={() => {
-                    requeueRefund.mutate(refund._id, {
-                      onSuccess: () => {
-                        toast.success("Refund requeued for processing");
-                        setShowRequeueConfirm(false);
-                      },
-                      onError: () => {
-                        toast.error("Failed to requeue refund");
-                      },
-                    });
-                  }}>
-                  {requeueRefund.isPending ? "Requeuing…" : "Requeue"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+      <ConfirmDialog
+        open={showRequeueConfirm}
+        onClose={() => setShowRequeueConfirm(false)}
+        title="Requeue Refund"
+        description={`This will reset retry counters and re-dispatch the refund to the payment gateway. Requeue count: ${refund.requeueCount}/3.`}
+        confirmLabel={requeueRefund.isPending ? "Requeuing…" : "Requeue"}
+        isLoading={requeueRefund.isPending}
+        onConfirm={() => {
+          requeueRefund.mutate(refund._id, {
+            onSuccess: () => {
+              toast.success("Refund requeued for processing");
+              setShowRequeueConfirm(false);
+            },
+            onError: () => {
+              toast.error("Failed to requeue refund");
+            },
+          });
+        }}
+      />
     </>
   );
 }
